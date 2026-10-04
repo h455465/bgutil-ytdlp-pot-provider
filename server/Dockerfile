@@ -3,7 +3,7 @@ FROM node:26-bookworm-slim AS install
 USER node
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY server/package.json server/package-lock.json ./
 
 RUN npm ci --omit=dev --no-audit --no-fund
 
@@ -12,9 +12,9 @@ FROM install AS build_node
 
 RUN npm ci --no-audit --no-fund
 
-COPY types/ types/
-COPY tsconfig.json ./
-COPY src/ src/
+COPY server/types/ types/
+COPY server/tsconfig.json ./
+COPY server/src/ src/
 
 RUN npx tsc
 
